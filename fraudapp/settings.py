@@ -198,7 +198,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/srv/log/fraudapp.log',
+            'filename': './logs/fraudapp.log',
         },
     },
     'loggers': {
