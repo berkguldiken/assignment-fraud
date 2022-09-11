@@ -94,7 +94,6 @@ class PersonMatcherAPIView(ListAPIView):
         persons = PersonData.objects.all()
         return persons
 
-    @method_decorator(cache_page(60*60*2))
     def post(self, *_, **__):
         person_info = PersonDataSerializer(data= self.request.data)
         person_info.is_valid(raise_exception=True)
@@ -102,14 +101,3 @@ class PersonMatcherAPIView(ListAPIView):
         match_status = matcher.run()
         match_status_percentage = '%'+ str(match_status)
         return Response({'success':'true','match_status_percent':match_status_percentage})
-
-
-if not CustomUser.objects.filter(is_superuser=True).first():
-    user = CustomUser.objects.create(
-        username = 'admin',
-        email = 'admin@admin.com',
-        is_superuser = True,
-    )
-    user.set_password('admin')
-    user.save()
-

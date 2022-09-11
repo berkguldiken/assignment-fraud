@@ -30,6 +30,3 @@ urlpatterns = [
 ]
 
 
-from .default_rules import default_rules
-
-default_rules()

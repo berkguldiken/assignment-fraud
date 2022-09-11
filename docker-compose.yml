@@ -24,3 +24,10 @@ services:
       - .:/code
     depends_on:
       - postgres
+  memcached:
+    image: memcached
+    ports:
+      - "11211:11211"
+    entrypoint:
+      - memcached
+      - -m 64

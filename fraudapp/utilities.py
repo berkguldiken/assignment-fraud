@@ -79,7 +79,8 @@ class FirstNameValidator(BasePipelineElement):
                     if self._person_data['first_name'].value in nicks:
                         self._match_status += _rule.rule_value  
                         flag = False
-                        self._log_builder.error('First Name Validation: Found a person with the same name using diminutive')  
+                        self._log_builder.error('First Name Validation: Found a person with the same name using diminutive') 
+                        break 
                 if flag:
                     self._log_builder.info('First Name Validation: OK. No person found with same or similar first name')
         return self._match_status
