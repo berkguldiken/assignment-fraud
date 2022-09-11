@@ -198,7 +198,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/srv/log/vaaam-server.log',
+            'filename': '/srv/log/fraudapp.log',
         },
     },
     'loggers': {
