@@ -3,7 +3,18 @@ This is fraud detection app, there are two endpoints; one is creating a person a
 
 **Table Of Content**
 
-{:toc}
+- [assignment-fraud](#assignment-fraud)
+  * [Requirements](#Requirements)
+  * [How to run the system](#How to run the system)
+  * [How To Access To The App and Admin Panel](#How To Access To The App and Admin Panel)
+  * [Security](#Security)
+  * [Endpoints Directory](#Endpoints Directory)
+  * [Endpoints and Postman Collection](#Endpoints and Postman Collection)
+    + [Create new user](#Create new user)
+    + [Login Token Generator](#Login Token Generator)
+    + [Get All Persons Data](#Get All Persons Data)
+    + [Add New Person Data](#Add New Person Data)
+    + [Match Person Data](#Match Person Data)
 
 #### Requirements
 
