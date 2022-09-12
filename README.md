@@ -1,5 +1,5 @@
 # assignment-fraud
-This is fraud detection app, there are two endpoints; one is creating a person and second one is matching a given person searching for database.This app is created with Django, using postgres as database and memcached as cache server.
+This is fraud detection app, there are two endpoints; one is creating a person and second one is matching a given person searching for database.This app is created with Django, using postgres as database and memcached as cache server. there are two types of logs. One is when the Person Matcher endpoint is called and the second one is logging all the thing with the server including database queries.
 
 **Table Of Content**
 
