@@ -3,7 +3,7 @@ This is fraud detection app, there are two endpoints; one is creating a person a
 
 **Table Of Content**
 
-[TOC]
+{:toc}
 
 #### Requirements
 
