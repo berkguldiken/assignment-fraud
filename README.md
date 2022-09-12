@@ -31,6 +31,7 @@ go inside the directory
 cd ./assignment-fraud
 ```
 after that if needed give permission to the entrypoint.sh file. If on linux system permission can be given with:
+Other permission types(776,770 etc.) are not tested and for the purpose of test below permission is given 
 ```
 chmod 777 ./entrypoint.sh
 ```
