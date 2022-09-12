@@ -1,0 +1,249 @@
+{
+	"info": {
+		"_postman_id": "d58e512c-61a7-4361-b574-edf5809f80be",
+		"name": "fraudapp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login Token Generator",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "berk2",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "berk",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/token/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"token",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "berk2",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "berk",
+									"type": "default"
+								},
+								{
+									"key": "name",
+									"value": "berk",
+									"type": "default"
+								},
+								{
+									"key": "email",
+									"value": "be@be.be",
+									"type": "default"
+								},
+								{
+									"key": "role",
+									"value": "1",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/create-user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"create-user",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Utilities",
+			"item": [
+				{
+					"name": "Get All Persons Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add New Person Data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "first_name",
+									"value": "andrew",
+									"type": "default"
+								},
+								{
+									"key": "last_name",
+									"value": "güldiken23",
+									"type": "default"
+								},
+								{
+									"key": "date_of_birth",
+									"value": "1997-03-18",
+									"type": "default"
+								},
+								{
+									"key": "id_number",
+									"value": "931212312",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/person/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"person",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Match Person Data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "first_name",
+									"value": "andy",
+									"type": "default"
+								},
+								{
+									"key": "last_name",
+									"value": "güldiken234",
+									"type": "default"
+								},
+								{
+									"key": "date_of_birth",
+									"value": "1997-03-15",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "id_number",
+									"value": "931212",
+									"type": "default",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/person/match/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"person",
+								"match",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjYyOTAzMTgyLCJpYXQiOjE2NjI5MDAxODIsImp0aSI6IjViYTI3ZGJhNzk2NTQ4YTdiMzI5OWEwN2U2OGNkNzY3IiwidXNlcl9pZCI6Mn0.j0IxLNfaYvofMTtQso8MTj5fqX5ieOOw9uJU1I0Z7KQ",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "localhost:8000",
+			"type": "default"
+		}
+	]
+}

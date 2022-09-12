@@ -13,36 +13,19 @@ from .utilities import PersonMatcher
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.contrib.auth.hashers import make_password
-
-class TestAPIView(APIView):
-    serializer_class = TestSerializer
-
-    def get(self,request, *_, **__):
-        user_info = request.user
-        print(user_info)
-        return Response({'success':'true', 'info':'oldu bea','user':user_info})
-
-    def post(self, *_, **__):
-
-        return Response({'success':'true', 'info':'oldu bea'})
-
+from rest_framework.permissions import IsAdminUser, AllowAny
 #This class is for user endpoint. It handles user creation
 class CreateUserAPIView(APIView):
     serializer_class = CreateUserSerializer
     authentication_classes = [] #disables authentication
     permission_classes = [] #disables permission
+    # auth and perms are disabled because everyone can create a user ?
 
     def validate_password(self, value: str) -> str:
-        """
-        Hash value passed by user.
-
-        :param value: password of a user
-        :return: a hashed version of the password
-        """
         return make_password(value)
 
 
-    #TODO: Add new functionality here
+    #TODO: maybe add get all users that can be used ony for admin ?
     def get(self,request, *_, **__):
         user_info = CustomUser.objects.all()
         print(user_info)
@@ -73,7 +56,22 @@ class CreateUserAPIView(APIView):
 class PersonAPIView(ListAPIView):
     serializer_class = PersonDataSerializer
 
-    def get_queryset(self):
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.request.method == 'GET':
+            permission_classes = [IsAdminUser]
+        else:
+            permission_classes = [AllowAny]
+        return [permission() for permission in permission_classes]
+
+    @method_decorator(cache_page(60*2))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+     
+    def get_queryset(self,  *_, **__):
         persons = PersonData.objects.all()
         return persons
 
@@ -89,7 +87,6 @@ class PersonAPIView(ListAPIView):
 class PersonMatcherAPIView(ListAPIView):
     serializer_class = PersonDataSerializer
 
-    @method_decorator(cache_page(60*60*2))
     def get_queryset(self):
         persons = PersonData.objects.all()
         return persons
@@ -99,5 +96,5 @@ class PersonMatcherAPIView(ListAPIView):
         person_info.is_valid(raise_exception=True)
         matcher = PersonMatcher(person_info)
         match_status = matcher.run()
-        match_status_percentage = '%'+ str(match_status)
+        match_status_percentage = str(match_status)
         return Response({'success':'true','match_status_percent':match_status_percentage})

@@ -9,8 +9,8 @@ class LogBuilder(list):
     def info(self, message: str):
         self.append(f'[INFO] {message}')
 
-    def error(self, message: str):
-        self.append(f'[ERROR] {message}')
+    def warn(self, message: str):
+        self.append(f'[WARNING] {message}')
 
     def build(self):
         return '\n'.join(map(str, self))
@@ -31,7 +31,7 @@ class IdentificationValidator(BasePipelineElement):
             self._log_builder.info('ID Validation: NO ID is given')
         elif PersonData.objects.filter(id_number =self._person_data['id_number'].value).exists():
             self._match_status = _rule.rule_value
-            self._log_builder.error('ID Validation: Person with the same id exist')
+            self._log_builder.warn('ID Validation: Person with the same id exist')
         else:
             self._log_builder.info('ID Validation: OK. No person found with same id')
         return self._match_status
@@ -44,7 +44,7 @@ class FirstNameValidator(BasePipelineElement):
         # this checks the same name
         if PersonData.objects.filter(first_name =self._person_data['first_name'].value).exists(): # this checks the whole name similarity
             self._match_status += _rule.rule_value
-            self._log_builder.error('First Name Validation: Person with the same first name exist')
+            self._log_builder.warn('First Name Validation: Person with the same first name exist')
 
         # this checks the initials
         elif len(self._person_data['first_name'].value) <= 2 : 
@@ -52,7 +52,7 @@ class FirstNameValidator(BasePipelineElement):
             _rule = MatcherRulesConfig.objects.get(rule_tag = "similar_first_name")
             if PersonData.objects.filter(first_name__startswith=initial).exists():
                 self._match_status += _rule.rule_value
-                self._log_builder.error('First Name Validation: Found a person with the same initial')
+                self._log_builder.warn('First Name Validation: Found a person with the same initial')
         
         #this checks typos and diminutive names
         else: 
@@ -60,14 +60,14 @@ class FirstNameValidator(BasePipelineElement):
             _rule = MatcherRulesConfig.objects.get(rule_tag = "similar_first_name")
             if len(diff_list) == 1:
                 self._match_status += _rule.rule_value
-                self._log_builder.error('First Name Validation: Found a person with the same name with typo')
+                self._log_builder.warn('First Name Validation: Found a person with the same name with typo')
             
             #check if the change is only 2 characters
             elif len(diff_list) == 2: 
                 for word in diff_list:
                     if '-' in word: #check if changed 2 characters are not added but one character is changed
                         self._match_status += _rule.rule_value
-                        self._log_builder.error('First Name Validation: Found a person with the same name with typo')
+                        self._log_builder.warn('First Name Validation: Found a person with the same name with typo')
             
             # this checks diminutive names
             else:
@@ -79,7 +79,7 @@ class FirstNameValidator(BasePipelineElement):
                     if self._person_data['first_name'].value in nicks:
                         self._match_status += _rule.rule_value  
                         flag = False
-                        self._log_builder.error('First Name Validation: Found a person with the same name using diminutive') 
+                        self._log_builder.warn('First Name Validation: Found a person with the same name using diminutive') 
                         break 
                 if flag:
                     self._log_builder.info('First Name Validation: OK. No person found with same or similar first name')
@@ -92,7 +92,7 @@ class LastNameValidator(BasePipelineElement):
         _rule = MatcherRulesConfig.objects.get(rule_tag = "same_last_name")
         if PersonData.objects.filter(last_name =self._person_data['last_name'].value).exists():
             self._match_status += _rule.rule_value
-            self._log_builder.error('Last Name Validation: Person with the same last name exist')
+            self._log_builder.warn('Last Name Validation: Person with the same last name exist')
         else:
             self._log_builder.info('Last Name Validation: OK. No person found with same last name')
         return self._match_status
@@ -107,7 +107,7 @@ class DateOfBirthValidator(BasePipelineElement):
             self._log_builder.info('Date Of Birth Validation: NO date of birth is given')
         elif PersonData.objects.filter(date_of_birth =self._person_data['date_of_birth'].value).exists():
             self._match_status += _rule.rule_value
-            self._log_builder.error('Date Of Birth Validation: Person with the same date of birth exist')
+            self._log_builder.warn('Date Of Birth Validation: Person with the same date of birth exist')
         else:
             self._log_builder.info('Date Of Birth Validation: OK. No person found with same date of birth')
         return self._match_status
@@ -148,7 +148,7 @@ class PersonMatcher:
                 self._match_status += element.run()
 
             except Exception as e:
-                self._log_builder.error(f'During execution {element.__class__.__name__} error occured: {e}')
+                self._log_builder.warn(f'During execution {element.__class__.__name__} error occured: {e}')
 
             if element._match_status >=100:
 
